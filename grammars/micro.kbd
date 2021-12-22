@@ -1,0 +1,23 @@
+bindings <- { 'ctrl+s',    save }
+          | { 'ctrl+q',    quit }
+          | { 'ctrl+e',    command }
+          | { 'ctrl+f',    cursor-to [ifind]; select-word }
+          | { 'ctrl+n',    cursor-to [find-next]; select-word }
+          | { 'ctrl+p',    cursor-to [find-previous]; select-word }
+          | { 'enter',     insert '\n' }
+          | { 'backspace', delete-range $pos $pos-1 }
+          | { 'delete',    delete-range $pos $pos+1 }
+          | { 'paste',     insert $0 }
+          | { .,           insert $0 }
+          | { Move,        cursor-to [$1] }
+          | { SelectMove,  select-to [$1] }
+
+Move <- { 'left',  cursor-left $pos }
+      | { 'right', cursor-right $pos }
+      | { 'up',    cursor-up $pos }
+      | { 'down',  cursor-down $pos }
+
+SelectMove <- { 'shift+left',  cursor-left $pos }
+            | { 'shift+right', cursor-right $pos }
+            | { 'shift+up',    cursor-up $pos }
+            | { 'shift+down',  cursor-down $pos }

@@ -1,0 +1,7 @@
+bindings <- '<esc>'       { set mode vim-normal }
+          / '<ctrl-c>'    { set mode vim-normal }
+          / '<ctrl+w>'    { delete-range $pos $pos+[word-back] }
+          / '<enter>'     { insert '\n' }
+          / '<backspace>' { delete-range $pos $pos-1 }
+          / '<delete>'    { delete-range $pos $pos+1 }
+          / .             { insert $0 }

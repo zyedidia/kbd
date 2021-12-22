@@ -1,0 +1,54 @@
+bindings <- action
+          / <Num> <raction> { repeat -n $1 $2 }
+
+action <- / '<esc>'    { set mode vim-normal }
+          / '<ctrl-c>' { set mode vim-normal }
+
+raction <- <Move>   { select-to $pos+$1 }
+         / <TxtObj> { select-range $1[0] $1[1] }
+         / 'd'      { delete-selection }
+
+Move <- <Num> 'w'       { word-front -n $1 }
+      / <Num> 'W'       { word-front-ws -n $1 }
+      / <Num> 'b'       { word-back -n $1 }
+      / <Num> 'B'       { word-back-ws -n $1 }
+      / <Num> 'e'       { word-end -n $1 }
+      / <Num> 'E'       { word-end-ws -n $1 }
+      / <Num> 'f' <Any> { find-char -n $1 $2 }
+      / <Num> 'F' <Any> { find-char-back -n $1 $2 }
+      / <Num> 't' <Any> { find-till -n $1 $2 }
+      / <Num> 'T' <Any> { find-till-back -n $1 $2 }
+      / <Num> 'h'       { cursor-left -n $1 }
+      / <Num> 'j'       { cursor-down -n $1 }
+      / <Num> 'k'       { cursor-up -n $1 }
+      / <Num> 'l'       { cursor-right -n $1 }
+      / <Num> '$'       { cursor-line-end -n $1 }
+      / <Num> '^'       { cursor-line-start -n $1 }
+      / <Num> '0'       { cursor-line-start-char -n $1 }
+      / 'gg'            { cursor-start-buffer }
+      / 'G'             { cursor-end-buffer }
+      / <Num> 'gg'      { cursor-line-to $1 }
+      / <Num> 'G'       { cursor-line-to $1 }
+      / '/'             { ifind }
+
+TxtObj <- 'ie'  { inside-all }
+        / 'ae'  { around-all }
+        / 'i"'  { inside-dquote }
+        / 'a"'  { around-dquote }
+        / 'i\'' { inside-squote }
+        / 'a\'' { around-squote }
+        / 'i('  { inside-paren }
+        / 'a('  { around-paren }
+        / 'i)'  { inside-paren }
+        / 'a)'  { around-paren }
+        / 'i{'  { inside-curly }
+        / 'a{'  { around-curly }
+        / 'i}'  { inside-curly }
+        / 'a}'  { around-curly }
+        / 'i['  { inside-square }
+        / 'a['  { around-square }
+        / 'i]'  { inside-square }
+        / 'a]'  { around-square }
+
+Num <- [0-9]+ { $0 }
+Any <- .      { $0 }
