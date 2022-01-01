@@ -1,6 +1,10 @@
 package kbd
 
-import "math"
+import (
+	"math"
+
+	"github.com/zyedidia/gpeg/charset"
+)
 
 type Pattern interface {
 	Compile() Program
@@ -149,6 +153,14 @@ func RangeRune(low, high rune) *LitNode {
 		ev: &WildcardRuneEvent{
 			Low:  low,
 			High: high,
+		},
+	}
+}
+
+func Set(s charset.Set) *LitNode {
+	return &LitNode{
+		ev: &WildcardRuneSetEvent{
+			Set: s,
 		},
 	}
 }

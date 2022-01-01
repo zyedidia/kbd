@@ -12,6 +12,8 @@ github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778 h1:QldyIu/L63oPpyvQmHg
 github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778/go.mod h1:2MuV+tbUrU1zIOPMxZ5EncGwgmMJsa+9ucAQZXxsObs=
 github.com/zyedidia/generic v0.0.0-20211221212527-13c2e081a614 h1:PIGXwzMWxg+ftkmApdnjh2bzN3PQlNfK//MzAJCt9WA=
 github.com/zyedidia/generic v0.0.0-20211221212527-13c2e081a614/go.mod h1:MmD7SwLBzrSNDsZd1Swnv/4dSrbd3b7WYcL61lq/fKU=
+github.com/zyedidia/gpeg v0.0.0-20211118095656-b73cf96bdf80 h1:294fTzXJ1B4Cqu3DVQr9ll9uuIk7FXGVnktjjyEmVXY=
+github.com/zyedidia/gpeg v0.0.0-20211118095656-b73cf96bdf80/go.mod h1:JUfbyVutLbiMWcCx6HhDyRS+D7Umm76+m0UlCykX0Zs=
 golang.org/x/sys v0.0.0-20201119102817-f84b799fce68 h1:nxC68pudNYkKU6jWhgrqdreuFiOQWj1Fs7T3VrH4Pjw=
 golang.org/x/sys v0.0.0-20201119102817-f84b799fce68/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf h1:MZ2shdL+ZM/XzY3ZGOnh4Nlpnxz5GSOhOmtHo3iPU6M=

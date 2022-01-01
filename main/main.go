@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
 	"github.com/micro-editor/tcell/v2"
 	"github.com/zyedidia/kbd"
+	"github.com/zyedidia/kbd/syntax"
 )
 
 func main() {
@@ -18,7 +20,12 @@ func main() {
 
 	log.SetOutput(f)
 
-	prog := vim()
+	data, err := ioutil.ReadFile(os.Args[1])
+	if err != nil {
+		log.Fatal(err)
+	}
+	prog := syntax.MustCompile("micro", string(data))
+	// prog := vim()
 	log.Println(prog.Compile())
 
 	vm := kbd.NewVM(prog.Compile())

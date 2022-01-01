@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/zyedidia/gpeg/charset"
 	"github.com/zyedidia/kbd/cbind"
 
 	"github.com/micro-editor/tcell/v2"
@@ -92,6 +93,27 @@ func (we *WildcardRuneEvent) Match(ev tcell.Event) bool {
 
 func (we *WildcardRuneEvent) String() string {
 	return fmt.Sprintf("Any [%s-%s]", string(we.Low), string(we.High))
+}
+
+type WildcardRuneSetEvent struct {
+	Set charset.Set
+	// result
+	Rune rune
+}
+
+func (we *WildcardRuneSetEvent) Match(ev tcell.Event) bool {
+	if kev, ok := ev.(*tcell.EventKey); ok && kev.Key() == tcell.KeyRune {
+		r := kev.Rune()
+		if r >= 0 && r < 256 && we.Set.Has(byte(r)) {
+			we.Rune = kev.Rune()
+			return true
+		}
+	}
+	return false
+}
+
+func (we *WildcardRuneSetEvent) String() string {
+	return fmt.Sprintf("AnySet %v", we.Set)
 }
 
 // A PasteEvent matches any tcell paste event and stores the pasted text.
