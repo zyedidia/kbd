@@ -16,7 +16,7 @@ func TestExpand(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.template, func(t *testing.T) {
-			n := nargs(tt.template)
+			n, _ := nargs(tt.template)
 			if n != len(tt.args) {
 				t.Fatalf("nargs: %d, expected: %d", n, len(tt.args))
 			}

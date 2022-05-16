@@ -193,3 +193,42 @@ func (n *EndNode) Compile() Program {
 		iEnd{},
 	}
 }
+
+type NonTermNode struct {
+	name string
+}
+
+func NonTerm(name string) Pattern {
+	return &NonTermNode{
+		name: name,
+	}
+}
+
+func (n *NonTermNode) Compile() Program {
+	var prog Program
+	prog = append(prog, iOpenCall{n.name})
+	return prog
+}
+
+func Grammar(fns map[string]Program, root string) Program {
+	var prog Program
+
+	fnlocs := make(map[string]int)
+
+	i := 0
+	for name, fn := range fns {
+		fnlocs[name] = i
+		prog = append(prog, fn...)
+		prog = append(prog, iRet{})
+		i += 1 + len(fn)
+	}
+
+	for j, insn := range prog {
+		switch t := insn.(type) {
+		case iOpenCall:
+			prog[j] = iCall{fnlocs[t.name]}
+		}
+	}
+
+	return prog
+}

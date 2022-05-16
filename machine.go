@@ -13,6 +13,7 @@ type machine struct {
 	cmds []string
 	vars []interface{}
 	caps *stack.Stack[int]
+	rets *stack.Stack[int]
 
 	status status
 }
@@ -30,6 +31,7 @@ func newMachine() *machine {
 		cmds: nil,
 		vars: nil,
 		caps: stack.New[int](),
+		rets: stack.New[int](),
 	}
 }
 
@@ -45,6 +47,7 @@ func (m *machine) cpy(pc int) *machine {
 		cmds:   cmds,
 		vars:   vars,
 		caps:   m.caps.Copy(),
+		rets:   m.rets.Copy(),
 		status: m.status,
 	}
 }
@@ -66,6 +69,12 @@ func (m *machine) step(prog Program, evs events) (splitpc int, ok bool) {
 	case iEnd:
 		m.done(true)
 		return
+	case iCall:
+		m.rets.Push(m.pc + 1)
+		m.pc = t.lbl
+	case iRet:
+		ret := m.rets.Pop()
+		m.pc = ret
 	case iConsume:
 		if m.sp >= len(evs) {
 			m.status.blocked = true

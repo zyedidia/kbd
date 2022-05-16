@@ -64,3 +64,25 @@ type iSplit struct {
 func (i iSplit) String() string {
 	return fmt.Sprintf("split %v, %v", i.lbl1, i.lbl2)
 }
+
+type iCall struct {
+	lbl int
+}
+
+func (i iCall) String() string {
+	return fmt.Sprintf("call %v", i.lbl)
+}
+
+type iOpenCall struct {
+	name string
+}
+
+func (i iOpenCall) String() string {
+	return fmt.Sprintf("opencall %v", i.name)
+}
+
+type iRet struct{}
+
+func (i iRet) String() string {
+	return fmt.Sprintf("ret")
+}
