@@ -12,13 +12,13 @@ import (
 )
 
 func main() {
-	f, err := os.Create("log.txt")
-	if err != nil {
-		log.Fatalf("error opening file: %v", err)
-	}
-	defer f.Close()
-
-	log.SetOutput(f)
+	// f, err := os.Create("log.txt")
+	// if err != nil {
+	// 	log.Fatalf("error opening file: %v", err)
+	// }
+	// defer f.Close()
+	//
+	// log.SetOutput(f)
 
 	data, err := ioutil.ReadFile(os.Args[1])
 	if err != nil {

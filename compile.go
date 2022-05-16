@@ -222,17 +222,32 @@ func (n *NonTermNode) Compile() Program {
 	return prog
 }
 
-func Grammar(fns map[string]Program, root string) Program {
+type GrammarNode struct {
+	fns  map[string]Pattern
+	root string
+}
+
+func Grammar(root string, fns map[string]Pattern) Pattern {
+	return &GrammarNode{
+		fns:  fns,
+		root: root,
+	}
+}
+
+func (n *GrammarNode) Compile() Program {
 	var prog Program
+	prog = append(prog, iOpenCall{n.root})
+	prog = append(prog, iEnd{})
 
 	fnlocs := make(map[string]int)
 
-	i := 0
-	for name, fn := range fns {
+	i := len(prog)
+	for name, fn := range n.fns {
 		fnlocs[name] = i
-		prog = append(prog, fn...)
+		fnprog := fn.Compile()
+		prog = append(prog, fnprog...)
 		prog = append(prog, iRet{})
-		i += 1 + len(fn)
+		i += 1 + len(fnprog)
 	}
 
 	for j, insn := range prog {

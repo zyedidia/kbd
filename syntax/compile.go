@@ -22,18 +22,17 @@ func init() {
 
 func compile(name string, root *memo.Capture, s string) kbd.Pattern {
 	var p kbd.Pattern
-	fmt.Println(root.Id(), idExpression)
 	switch root.Id() {
 	case idPattern:
 		p = compile(name, root.Child(0), s)
-	// case idGrammar:
-	// 	nonterms := make(map[string]kbd.Pattern)
-	// 	it := root.ChildIterator(0)
-	// 	for c := it(); c != nil; c = it() {
-	// 		k, v := compileDef(name, c, s)
-	// 		nonterms[name+k] = v
-	// 	}
-	// 	p = kbd.Grammar(name+"token", nonterms)
+	case idGrammar:
+		nonterms := make(map[string]kbd.Pattern)
+		it := root.ChildIterator(0)
+		for c := it(); c != nil; c = it() {
+			k, v := compileDef(name, c, s)
+			nonterms[k] = v
+		}
+		p = kbd.Grammar("bindings", nonterms)
 	case idExpression:
 		alternations := make([]kbd.Pattern, 0, root.NumChildren())
 		it := root.ChildIterator(0)
@@ -99,8 +98,8 @@ func compile(name string, root *memo.Capture, s string) kbd.Pattern {
 			set = set.Complement()
 		}
 		p = kbd.Set(set)
-		// case idIdentifier:
-		// 	p = pattern.NonTerm(name + parseId(root, s))
+	case idIdentifier:
+		p = kbd.NonTerm(parseId(root, s))
 	}
 	return p
 }
