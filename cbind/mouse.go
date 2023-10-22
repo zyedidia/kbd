@@ -2,6 +2,7 @@ package cbind
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/micro-editor/tcell/v2"
@@ -41,7 +42,7 @@ var btnName = map[tcell.ButtonMask]string{
 
 func DecodeMouse(s string) (mod tcell.ModMask, btn tcell.ButtonMask, err error) {
 	if len(s) == 0 {
-		return 0, 0, ErrInvalidKeyEvent
+		return 0, 0, fmt.Errorf("%s: %w", s, ErrInvalidKeyEvent)
 	}
 
 	split := strings.Split(s, "+")

@@ -2,6 +2,7 @@ package cbind
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 	"unicode"
 
@@ -192,7 +193,7 @@ var keyNamesUniform = map[string]tcell.Key{
 // Decode decodes a string as a key or combination of keys.
 func Decode(s string) (mod tcell.ModMask, key tcell.Key, ch rune, err error) {
 	if len(s) == 0 {
-		return 0, 0, 0, ErrInvalidKeyEvent
+		return 0, 0, 0, fmt.Errorf("%s: %w", s, ErrInvalidKeyEvent)
 	}
 
 	// Special case for plus rune decoding
@@ -203,7 +204,7 @@ func Decode(s string) (mod tcell.ModMask, key tcell.Key, ch rune, err error) {
 		if len(s) == 1 {
 			return mod, key, ch, nil
 		} else if len(s) == 2 {
-			return 0, 0, 0, ErrInvalidKeyEvent
+			return 0, 0, 0, fmt.Errorf("%s: %w", s, ErrInvalidKeyEvent)
 		} else {
 			s = s[:len(s)-2]
 		}
@@ -255,7 +256,7 @@ DECODEPIECE:
 
 		// Decode rune
 		if len(piece) > 1 {
-			return 0, 0, 0, ErrInvalidKeyEvent
+			return 0, 0, 0, fmt.Errorf("%s: %w", s, ErrInvalidKeyEvent)
 		}
 
 		key = tcell.KeyRune
