@@ -168,7 +168,13 @@ func compileSet(root *memo.Capture, s string) charset.Set {
 	return charset.Set{}
 }
 
-func Compile(name, s string) (kbd.Pattern, error) {
+func Compile(name, s string) (p kbd.Pattern, err error) {
+	defer func() {
+		if e := recover(); e != nil {
+			err = e.(error)
+		}
+	}()
+
 	match, n, ast, errs := parser.Exec(strings.NewReader(s), memo.NoneTable{})
 	if len(errs) != 0 {
 		return nil, errs[0]
