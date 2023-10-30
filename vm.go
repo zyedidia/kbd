@@ -2,6 +2,7 @@ package kbd
 
 import (
 	"bytes"
+	"fmt"
 
 	"github.com/micro-editor/tcell/v2"
 )
@@ -18,6 +19,9 @@ func ev2str(ev tcell.Event) string {
 		}
 	case *tcell.EventPaste:
 		return ev.Text()
+	case *tcell.EventMouse:
+		x, y := ev.Position()
+		return fmt.Sprintf("{%d %d}", x, y)
 	}
 	return ""
 }
@@ -29,8 +33,14 @@ func (evs events) slice(start, end int) string {
 
 	buf := &bytes.Buffer{}
 	slc := evs[start:end]
-	for _, e := range slc {
+	for i, e := range slc {
 		buf.WriteString(ev2str(e))
+		if i < len(slc)-1 {
+			buf.WriteByte(' ')
+		}
+	}
+	if end-start > 1 {
+		return fmt.Sprintf("{%s}", buf.String())
 	}
 	return buf.String()
 }
