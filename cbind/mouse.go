@@ -18,7 +18,7 @@ var nameBtn = map[string]tcell.ButtonMask{
 	"mousebutton7":    tcell.Button7,
 	"mousebutton8":    tcell.Button8,
 	"mousewheelup":    tcell.WheelUp,
-	"MouseWheelDown":  tcell.WheelDown,
+	"mousewheeldown":  tcell.WheelDown,
 	"mousewheelleft":  tcell.WheelLeft,
 	"mousewheelright": tcell.WheelRight,
 	"mousenone":       tcell.ButtonNone,
