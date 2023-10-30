@@ -16,6 +16,8 @@ func ev2str(ev tcell.Event) string {
 		if ev.Key() == tcell.KeyRune {
 			return string(ev.Rune())
 		}
+	case *tcell.EventPaste:
+		return ev.Text()
 	}
 	return ""
 }
