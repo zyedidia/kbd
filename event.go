@@ -81,7 +81,7 @@ type WildcardRuneEvent struct {
 }
 
 func (we *WildcardRuneEvent) Match(ev tcell.Event) bool {
-	if kev, ok := ev.(*tcell.EventKey); ok && kev.Key() == tcell.KeyRune {
+	if kev, ok := ev.(*tcell.EventKey); ok && kev.Key() == tcell.KeyRune && kev.Modifiers() == tcell.ModNone {
 		r := kev.Rune()
 		if r >= we.Low && r <= we.High {
 			we.Rune = kev.Rune()
@@ -102,7 +102,7 @@ type WildcardRuneSetEvent struct {
 }
 
 func (we *WildcardRuneSetEvent) Match(ev tcell.Event) bool {
-	if kev, ok := ev.(*tcell.EventKey); ok && kev.Key() == tcell.KeyRune {
+	if kev, ok := ev.(*tcell.EventKey); ok && kev.Key() == tcell.KeyRune && kev.Modifiers() == tcell.ModNone {
 		r := kev.Rune()
 		if r >= 0 && r < 256 && we.Set.Has(byte(r)) {
 			we.Rune = kev.Rune()
