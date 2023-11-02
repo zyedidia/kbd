@@ -112,7 +112,7 @@ func (vm *VM) Exec(next tcell.Event) (action Action, ok bool, more bool) {
 				vm.machines[ln-1] = nil
 				vm.machines = vm.machines[:ln-1]
 				i--
-				if !m.status.failed {
+				if !m.status.failed && !ok {
 					action.Cmd = m.cmds[0]
 					action.Vars = m.vars
 					ok = true
